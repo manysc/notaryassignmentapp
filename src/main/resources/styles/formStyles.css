@@ -1,0 +1,88 @@
+.formCenter {
+  margin-left: 45%;
+  top: 200px;
+  position: absolute;
+  height: 73%;
+  width: 40%;
+  text-align: left;
+  border: 0px solid #ccc;
+}
+
+.formCenterBottom {
+  margin-left: 45%;
+  top: 900px;
+  position: absolute;
+  height: 73%;
+  width: 40%;
+  text-align: left;
+  border: 0px solid #ccc;
+}
+
+.formLeft {
+  margin-left: 1%;
+  top: 200px;
+  position: absolute;
+  height: 73%;
+  width: 40%;
+  text-align: left;
+  border: 0px solid #ccc;
+}
+
+.formLeftBottom {
+  margin-left: 1%;
+  top: 900px;
+  position: absolute;
+  height: 73%;
+  width: 40%;
+  text-align: left;
+  border: 0px solid #ccc;
+}
+
+.formRight {
+  margin-left: 60%;
+  top: 200px;
+  position: absolute;
+  height: 80%;
+  width: 40%;
+  text-align: left;
+  border: 0px solid #ccc;
+}
+
+.formDashboardLeft {
+  margin-left: 5%;
+  top: 200px;
+  position: absolute;
+  height: 73%;
+  width: 40%;
+  text-align: left;
+  border: 0px solid #ccc;
+}
+
+.formDashboardFilters {
+  margin-left: 1%;
+  top: 230px;
+  position: absolute;
+  width: 23%;
+  height: 73%;
+  overflow-x: auto;
+  overflow-y: auto;
+  font-family: Arial;
+  font-size: 25px;
+  text-align: left;
+  border: 0px solid #ccc;
+}
+
+.formDashboard {
+  margin-left: 25%;
+  top: 200px;
+  position: absolute;
+  height: 73%;
+  width: 40%;
+  text-align: left;
+  border: 0px solid #ccc;
+}
+
+::placeholder {
+  color: white;
+  opacity: 10;
+}

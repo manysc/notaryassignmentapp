@@ -1,0 +1,131 @@
+h1 {
+    text-align: center;
+}
+
+h2 {
+    text-align: left;
+}
+
+body {
+  margin:0;
+  color: white;
+  font-family: Arial;
+  font-size: 30px;
+  text-align: center;
+  padding-top: 0px;
+  box-sizing: border-box;
+  background: -webkit-radial-gradient(circle, #1a82f7, #2F2727);
+}
+
+ul {
+  list-style-type: none;
+  margin-top: 120px;
+  padding: 0;
+  overflow: hidden;
+  background: transparent;
+  top: 0;
+  left: 0%;
+  width: 100%;
+  font-family: "Arial";
+  font-size: 30px;
+}
+
+li {
+  display: inline-block;
+  border-left: 2px solid white;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 12px 14px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active), .dropdown:hover .dropbtn {
+  background: -webkit-radial-gradient(circle, #1a82f7, #2F2727);
+}
+
+li:last-child {
+  border-right: 2px solid white;
+}
+
+.dropdown {
+  float: center;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: inherit;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 0px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family: Arial;
+  font-size: 30px;
+  background-color: transparent;
+}
+
+.filterInput[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin-left: -3%;
+  display: inline-block;
+  border: 0px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family: Arial;
+  font-size: 25px;
+  text-align: left;
+  color: white;
+  background-color: transparent;
+}
+
+textarea, select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 0px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family: Arial;
+  font-size: 30px;
+  background-color: transparent;
+}

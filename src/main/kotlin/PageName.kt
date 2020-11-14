@@ -1,0 +1,8 @@
+enum class PageName {
+    MAIN,
+    ESCROW_OFFICERS,
+    NOTARIES,
+    MANAGE_ASSIGNMENT,
+    DASHBOARD,
+    REPORTS
+}

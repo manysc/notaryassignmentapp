@@ -1,0 +1,16 @@
+.btn-group button {
+  margin-left: 85%;
+  background: -webkit-radial-gradient(circle, #1a82f7, #2F2727);
+  border: 1px solid #004d4d;
+  color: white;
+  padding: 15px 15px;
+  cursor: pointer;
+  width: 10%;
+  display: block; /* Make the buttons appear below each other */
+  border-radius: 12px;
+  font-size: 25px;
+}
+
+.btn-group button:hover {
+  background-color: #004d4d;
+}

@@ -1,0 +1,19 @@
+.workerTable {
+    width: 105%;
+    height: 85%;
+    overflow-x: auto;
+    overflow-y: auto;
+    fontSize: 30px;
+    fontFamily: "Arial";
+    fontWeight: normal;
+}
+
+.notarizationTable {
+    width: 235%;
+    height: 85%;
+    overflow-x: auto;
+    overflow-y: auto;
+    fontSize: 30px;
+    fontFamily: "Arial";
+    fontWeight: normal;
+}
