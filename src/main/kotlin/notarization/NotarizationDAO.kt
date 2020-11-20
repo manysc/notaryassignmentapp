@@ -180,6 +180,26 @@ class NotarizationDAO {
         return notarizations.toMutableList()
     }
 
+    suspend fun fetchActiveNotarizations(): List<Notarization> {
+        val notarizations = window.fetch(NotarizationURIs.GET_ACTIVE_NOTARIZATIONS.uri)
+            .await()
+            .json()
+            .await()
+            .unsafeCast<Array<Notarization>>()
+
+        return notarizations.toList()
+    }
+
+    suspend fun fetchInactiveNotarizations(): List<Notarization> {
+        val notarizations = window.fetch(NotarizationURIs.GET_INACTIVE_NOTARIZATIONS.uri)
+            .await()
+            .json()
+            .await()
+            .unsafeCast<Array<Notarization>>()
+
+        return notarizations.toList()
+    }
+
     private suspend fun fetchNotarization(escrowNumber: String): Notarization? {
         val response = window.fetch(NotarizationURIs.GET_NOTARIZATIONS.uri + escrowNumber).await()
         when (response.status) {

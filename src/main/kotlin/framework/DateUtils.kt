@@ -1,13 +1,12 @@
 package framework
 
-import kotlinx.html.js.onChangeFunction
 import kotlin.js.Date
 
 class DateUtils {
 
     companion object {
         fun getNumberedMonth(month: String): String {
-            var numberedMonth = ""
+            val numberedMonth: String
             when (month) {
                 "Jan" -> {
                     numberedMonth = "01"

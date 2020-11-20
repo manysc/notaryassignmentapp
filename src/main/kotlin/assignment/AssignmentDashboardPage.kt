@@ -87,19 +87,12 @@ class AssignmentDashboardPage : RComponent<RProps, AssignmentDashboardPageState>
         mainScope = MainScope()
 
         mainScope.launch {
-            val fetchedNotarizations = notarizationDAO.fetchNotarizationsByStatus(NotarizationStatus.NOT_SET)
-            fetchedNotarizations.addAll(notarizationDAO.fetchNotarizationsByStatus(NotarizationStatus.AVAILABLE))
-            fetchedNotarizations.addAll(notarizationDAO.fetchNotarizationsByStatus(NotarizationStatus.ASSIGNED))
-            fetchedNotarizations.addAll(notarizationDAO.fetchNotarizationsByStatus(NotarizationStatus.RESCHEDULE))
-            fetchedNotarizations.addAll(notarizationDAO.fetchNotarizationsByStatus(NotarizationStatus.IN_PROGRESS))
-            fetchedNotarizations.addAll(notarizationDAO.fetchNotarizationsByStatus(NotarizationStatus.SIGNED))
-            fetchedNotarizations.addAll(notarizationDAO.fetchNotarizationsByStatus(NotarizationStatus.DELIVERED))
-
+            val activeNotarizations = notarizationDAO.fetchActiveNotarizations()
             val fetchedEscrowOfficers = escrowOfficerDAO.fetchEscrowOfficers()
             val fetchedNotaries = notaryDAO.fetchNotaries()
 
             setState {
-                notarizations = fetchedNotarizations
+                notarizations = activeNotarizations
                 escrowOfficers = fetchedEscrowOfficers
                 notaries = fetchedNotaries
             }

@@ -87,15 +87,12 @@ class ReportsPage : RComponent<RProps, ReportsPageState>() {
         mainScope = MainScope()
 
         mainScope.launch {
-            var fetchedNotarizations = notarizationDAO.fetchNotarizationsByStatus(NotarizationStatus.COMPLETED)
-            fetchedNotarizations.addAll(notarizationDAO.fetchNotarizationsByStatus(NotarizationStatus.CANCELLED))
-            fetchedNotarizations.addAll(notarizationDAO.fetchNotarizationsByStatus(NotarizationStatus.REJECTED))
-
+            val inactiveNotarizations = notarizationDAO.fetchInactiveNotarizations()
             val fetchedEscrowOfficers = escrowOfficerDAO.fetchEscrowOfficers()
             val fetchedNotaries = notaryDAO.fetchNotaries()
 
             setState {
-                notarizations = fetchedNotarizations
+                notarizations = inactiveNotarizations
                 escrowOfficers = fetchedEscrowOfficers
                 notaries = fetchedNotaries
             }
