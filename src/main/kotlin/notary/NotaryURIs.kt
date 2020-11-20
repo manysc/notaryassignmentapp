@@ -1,5 +1,7 @@
 package notary
 
+import framework.ApplicationConfiguration
+
 enum class NotaryURIs(val uri: String) {
-    GET_NOTARIES("http://localhost:8081/api/notaries/")
+    GET_NOTARIES("http://${ApplicationConfiguration.getServiceIP()}:${ApplicationConfiguration.getServicePort()}/api/notaries/")
 }
