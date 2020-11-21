@@ -1,9 +1,11 @@
 package escrowOfficer
 
+import framework.ApplicationConfiguration
 import framework.HttpResponseStatus
 import framework.workerFormButtons
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.css.px
 import react.*
@@ -17,6 +19,7 @@ external interface EscrowOfficerPageState : RState {
     var selectedEscrowOfficer: EscrowOfficer
 
     var mainScope: CoroutineScope
+    var autoRefresh: Boolean
 }
 
 class EscrowOfficerPage : RComponent<RProps, EscrowOfficerPageState>() {
@@ -27,14 +30,14 @@ class EscrowOfficerPage : RComponent<RProps, EscrowOfficerPageState>() {
         escrowOfficerDAO = EscrowOfficerDAO()
         escrowOfficers = listOf()
         selectedEscrowOfficer = EscrowOfficer(0, "", "", "", "", "", "")
-        mainScope = MainScope()
+    }
 
-        mainScope.launch {
-            val fetchedEscrowOfficers = escrowOfficerDAO.fetchEscrowOfficers()
-            setState {
-                escrowOfficers = fetchedEscrowOfficers
-            }
-        }
+    override fun componentDidMount() {
+        autoRefreshResources()
+    }
+
+    override fun componentWillUnmount() {
+        state.autoRefresh = false
     }
 
     override fun RBuilder.render() {
@@ -122,6 +125,31 @@ class EscrowOfficerPage : RComponent<RProps, EscrowOfficerPageState>() {
 
             onClearClicked = {
                 clearEscrowOfficerForm()
+            }
+        }
+    }
+
+    private fun autoRefreshResources() {
+        state.mainScope = MainScope()
+        state.autoRefresh = true
+
+        state.mainScope.launch {
+            while(state.autoRefresh) {
+                val fetchedEscrowOfficers = state.escrowOfficerDAO.fetchEscrowOfficers()
+
+                if(!state.autoRefresh) {
+                    break
+                }
+
+                setState {
+                    escrowOfficers = fetchedEscrowOfficers
+                }
+
+                if(!state.autoRefresh) {
+                    break
+                }
+
+                delay(ApplicationConfiguration.getAutoRefreshResourcesFrequency())
             }
         }
     }

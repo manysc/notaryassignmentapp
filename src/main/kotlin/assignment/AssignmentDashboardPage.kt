@@ -2,9 +2,11 @@ package assignment
 
 import escrowOfficer.EscrowOfficer
 import escrowOfficer.EscrowOfficerDAO
+import framework.ApplicationConfiguration
 import framework.workerFormButtons
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.css.px
 import notarization.*
@@ -45,6 +47,7 @@ external interface AssignmentDashboardPageState : RState {
     var showDashboardFilters: Boolean
 
     var mainScope: CoroutineScope
+    var autoRefresh: Boolean
 }
 
 class AssignmentDashboardPage : RComponent<RProps, AssignmentDashboardPageState>() {
@@ -83,20 +86,14 @@ class AssignmentDashboardPage : RComponent<RProps, AssignmentDashboardPageState>
         sortByDeliveryMethod = false
 
         showDashboardFilters = false
+    }
 
-        mainScope = MainScope()
+    override fun componentDidMount() {
+        autoRefreshResources()
+    }
 
-        mainScope.launch {
-            val activeNotarizations = notarizationDAO.fetchActiveNotarizations()
-            val fetchedEscrowOfficers = escrowOfficerDAO.fetchEscrowOfficers()
-            val fetchedNotaries = notaryDAO.fetchNotaries()
-
-            setState {
-                notarizations = activeNotarizations
-                escrowOfficers = fetchedEscrowOfficers
-                notaries = fetchedNotaries
-            }
-        }
+    override fun componentWillUnmount() {
+        state.autoRefresh = false
     }
 
     override fun RBuilder.render() {
@@ -431,6 +428,71 @@ class AssignmentDashboardPage : RComponent<RProps, AssignmentDashboardPageState>
                 onCancelClicked = {
                     cancelNotarizationForm()
                 }
+            }
+        }
+    }
+
+    private fun autoRefreshResources() {
+        state.mainScope = MainScope()
+        state.autoRefresh = true
+
+        state.mainScope.launch {
+            while(state.autoRefresh) {
+                val activeNotarizations = state.notarizationDAO.fetchActiveNotarizations()
+
+                if(!state.autoRefresh) {
+                    break
+                }
+
+                setState {
+                    notarizations = activeNotarizations
+                }
+
+                if(!state.autoRefresh) {
+                    break
+                }
+
+                delay(ApplicationConfiguration.getAutoRefreshResourcesFrequency())
+            }
+        }
+
+        state.mainScope.launch {
+            while(state.autoRefresh) {
+                val fetchedEscrowOfficers = state.escrowOfficerDAO.fetchEscrowOfficers()
+
+                if(!state.autoRefresh) {
+                    break
+                }
+
+                setState {
+                    escrowOfficers = fetchedEscrowOfficers
+                }
+
+                if(!state.autoRefresh) {
+                    break
+                }
+
+                delay(ApplicationConfiguration.getAutoRefreshResourcesFrequency())
+            }
+        }
+
+        state.mainScope.launch {
+            while(state.autoRefresh) {
+                val fetchedNotaries = state.notaryDAO.fetchNotaries()
+
+                if(!state.autoRefresh) {
+                    break
+                }
+
+                setState {
+                    notaries = fetchedNotaries
+                }
+
+                if(!state.autoRefresh) {
+                    break
+                }
+
+                delay(ApplicationConfiguration.getAutoRefreshResourcesFrequency())
             }
         }
     }

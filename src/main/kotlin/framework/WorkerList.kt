@@ -64,12 +64,16 @@ abstract class WorkerList<T : Worker, P : WorkerListProps<T>> : RComponent<P, RS
                                         }
                                     }
 
-                                    if (worker == props.selectedWorker) {
-                                        css {
-                                            borderTop = "5px solid white"
-                                            borderBottom = "5px solid white"
+                                    if (worker.name == props.selectedWorker?.name ?: "") {
+                                        if (worker.lastName == props.selectedWorker?.lastName ?: "") {
+                                            if (worker.phoneNumber == props.selectedWorker?.phoneNumber ?: "") {
+                                                css {
+                                                    borderTop = "5px solid white"
+                                                    borderBottom = "5px solid white"
+                                                }
+                                                +"▶ "
+                                            }
                                         }
-                                        +"▶ "
                                     }
 
                                     +worker.name
@@ -88,10 +92,14 @@ abstract class WorkerList<T : Worker, P : WorkerListProps<T>> : RComponent<P, RS
 
                                         }
                                     }
-                                    if (worker == props.selectedWorker) {
-                                        css {
-                                            borderTop = "5px solid white"
-                                            borderBottom = "5px solid white"
+                                    if (worker.name == props.selectedWorker?.name ?: "") {
+                                        if (worker.lastName == props.selectedWorker?.lastName ?: "") {
+                                            if (worker.phoneNumber == props.selectedWorker?.phoneNumber ?: "") {
+                                                css {
+                                                    borderTop = "5px solid white"
+                                                    borderBottom = "5px solid white"
+                                                }
+                                            }
                                         }
                                     }
                                     +worker.lastName
@@ -110,10 +118,14 @@ abstract class WorkerList<T : Worker, P : WorkerListProps<T>> : RComponent<P, RS
 
                                         }
                                     }
-                                    if (worker == props.selectedWorker) {
-                                        css {
-                                            borderTop = "5px solid white"
-                                            borderBottom = "5px solid white"
+                                    if (worker.name == props.selectedWorker?.name ?: "") {
+                                        if (worker.lastName == props.selectedWorker?.lastName ?: "") {
+                                            if (worker.phoneNumber == props.selectedWorker?.phoneNumber ?: "") {
+                                                css {
+                                                    borderTop = "5px solid white"
+                                                    borderBottom = "5px solid white"
+                                                }
+                                            }
                                         }
                                     }
                                     +worker.phoneNumber

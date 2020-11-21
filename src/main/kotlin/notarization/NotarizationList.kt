@@ -845,7 +845,7 @@ class NotarizationList : RComponent<NotarizationListProps, NotarizationListState
                                             }
                                         }
 
-                                        +getStringDateTime(notarization.date.toString())
+                                        +DateUtils.getDateTimeFromLocalDateFormat(notarization.date).replace('T', ' ')
                                     }
                                 }
 

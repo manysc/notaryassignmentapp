@@ -1,9 +1,11 @@
 package notary
 
+import framework.ApplicationConfiguration
 import framework.HttpResponseStatus
 import framework.workerFormButtons
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.css.px
 import react.*
@@ -18,6 +20,7 @@ external interface NotaryPageState : RState {
     var selectedNotary: Notary
 
     var mainScope: CoroutineScope
+    var autoRefresh: Boolean
 }
 
 class NotaryPage : RComponent<RProps, NotaryPageState>() {
@@ -28,15 +31,14 @@ class NotaryPage : RComponent<RProps, NotaryPageState>() {
         pageErrorMessage = ""
         notaries = listOf()
         selectedNotary = Notary(0, "", "", "", "", "", "", certification = NotaryCertification(), licenseExpirationDate = Date(), "25 K", 0, 0)
-        mainScope = MainScope()
+    }
 
-        mainScope.launch {
-            val fetchedNotaries = notaryDAO.fetchNotaries()
+    override fun componentDidMount() {
+        autoRefreshResources()
+    }
 
-            setState {
-                notaries = fetchedNotaries
-            }
-        }
+    override fun componentWillUnmount() {
+        state.autoRefresh = false
     }
 
     override fun RBuilder.render() {
@@ -172,6 +174,31 @@ class NotaryPage : RComponent<RProps, NotaryPageState>() {
 
             onClearClicked = {
                 clearNotaryForm()
+            }
+        }
+    }
+
+    private fun autoRefreshResources() {
+        state.mainScope = MainScope()
+        state.autoRefresh = true
+
+        state.mainScope.launch {
+            while(state.autoRefresh) {
+                val fetchedNotaries = state.notaryDAO.fetchNotaries()
+
+                if(!state.autoRefresh) {
+                    break
+                }
+
+                setState {
+                    notaries = fetchedNotaries
+                }
+
+                if(!state.autoRefresh) {
+                    break
+                }
+
+                delay(ApplicationConfiguration.getAutoRefreshResourcesFrequency())
             }
         }
     }
