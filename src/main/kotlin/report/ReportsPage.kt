@@ -2,9 +2,11 @@ package report
 
 import escrowOfficer.EscrowOfficer
 import escrowOfficer.EscrowOfficerDAO
+import framework.ApplicationConfiguration
 import framework.workerFormButtons
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.css.px
 import notarization.*
@@ -45,6 +47,7 @@ external interface ReportsPageState : RState {
     var showDashboardFilters: Boolean
 
     var mainScope: CoroutineScope
+    var autoRefresh: Boolean
 }
 
 class ReportsPage : RComponent<RProps, ReportsPageState>() {
@@ -83,20 +86,14 @@ class ReportsPage : RComponent<RProps, ReportsPageState>() {
         sortByDeliveryMethod = false
 
         showDashboardFilters = false
+    }
 
-        mainScope = MainScope()
+    override fun componentDidMount() {
+        autoRefreshResources()
+    }
 
-        mainScope.launch {
-            val inactiveNotarizations = notarizationDAO.fetchInactiveNotarizations()
-            val fetchedEscrowOfficers = escrowOfficerDAO.fetchEscrowOfficers()
-            val fetchedNotaries = notaryDAO.fetchNotaries()
-
-            setState {
-                notarizations = inactiveNotarizations
-                escrowOfficers = fetchedEscrowOfficers
-                notaries = fetchedNotaries
-            }
-        }
+    override fun componentWillUnmount() {
+        state.autoRefresh = false
     }
 
     override fun RBuilder.render() {
@@ -415,6 +412,71 @@ class ReportsPage : RComponent<RProps, ReportsPageState>() {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private fun autoRefreshResources() {
+        state.mainScope = MainScope()
+        state.autoRefresh = true
+
+        state.mainScope.launch {
+            while(state.autoRefresh) {
+                val inactiveNotarizations = state.notarizationDAO.fetchInactiveNotarizations()
+
+                if(!state.autoRefresh) {
+                    break
+                }
+
+                setState {
+                    notarizations = inactiveNotarizations
+                }
+
+                if(!state.autoRefresh) {
+                    break
+                }
+
+                delay(ApplicationConfiguration.getAutoRefreshResourcesFrequency())
+            }
+        }
+
+        state.mainScope.launch {
+            while(state.autoRefresh) {
+                val fetchedEscrowOfficers = state.escrowOfficerDAO.fetchEscrowOfficers()
+
+                if(!state.autoRefresh) {
+                    break
+                }
+
+                setState {
+                    escrowOfficers = fetchedEscrowOfficers
+                }
+
+                if(!state.autoRefresh) {
+                    break
+                }
+
+                delay(ApplicationConfiguration.getAutoRefreshResourcesFrequency())
+            }
+        }
+
+        state.mainScope.launch {
+            while(state.autoRefresh) {
+                val fetchedNotaries = state.notaryDAO.fetchNotaries()
+
+                if(!state.autoRefresh) {
+                    break
+                }
+
+                setState {
+                    notaries = fetchedNotaries
+                }
+
+                if(!state.autoRefresh) {
+                    break
+                }
+
+                delay(ApplicationConfiguration.getAutoRefreshResourcesFrequency())
             }
         }
     }
