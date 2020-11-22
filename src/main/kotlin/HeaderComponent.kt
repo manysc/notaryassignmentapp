@@ -68,6 +68,7 @@ class HeaderComponent : RComponent<HeaderProps, RState>() {
                     borderRadius = 5.px
                     marginTop = 15.px
                     marginRight = 30.px
+                    whiteSpace = WhiteSpace.nowrap
                     hover {
                         backgroundColor = Color("#004d4d")
                     }
