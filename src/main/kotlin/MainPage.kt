@@ -1,11 +1,13 @@
 import assignment.assignmentDashboardPage
 import assignment.newAssignmentPage
 import escrowOfficer.escrowOfficerPage
+import signin.signInPage
 import notary.notaryPage
 import react.*
 import report.reportsPage
 
 external interface MainPageState : RState {
+    var showSignIn: Boolean
     var showEscrowOfficers: Boolean
     var showNotaries: Boolean
     var showNewAssignment: Boolean
@@ -15,11 +17,19 @@ external interface MainPageState : RState {
 
 class MainPage : RComponent<RProps, MainPageState>() {
 
+    override fun MainPageState.init() {
+        showSignIn = true
+        showAssignmentDashboard = true
+    }
+
     override fun RBuilder.render() {
         // Header
         header {
-            onLogoutClicked = {
+            showSignOutButton = !state.showSignIn
+
+            onSignOutClicked = {
                 setState {
+                    showSignIn = true
                     showEscrowOfficers = false
                     showNotaries = false
                     showNewAssignment = false
@@ -27,6 +37,18 @@ class MainPage : RComponent<RProps, MainPageState>() {
                     showReports = false
                 }
             }
+        }
+
+        if (state.showSignIn) {
+            signInPage {
+                onSignedIn = {
+                    setState {
+                        showSignIn = false
+                    }
+                }
+            }
+
+            return
         }
 
         // Menu Bar

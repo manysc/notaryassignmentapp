@@ -102,6 +102,19 @@ input[type=text], select {
   background-color: transparent;
 }
 
+input[type=password], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 0px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family: Arial;
+  font-size: 30px;
+  background-color: transparent;
+}
+
 .filterInput[type=text], select {
   width: 100%;
   padding: 12px 20px;

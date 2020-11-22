@@ -10,7 +10,9 @@ import styled.styledDiv
 import styled.styledImg
 
 external interface HeaderProps : RProps {
-    var onLogoutClicked: () -> Unit
+    var showSignOutButton: Boolean
+
+    var onSignOutClicked: () -> Unit
 }
 
 class HeaderComponent : RComponent<HeaderProps, RState>() {
@@ -49,32 +51,34 @@ class HeaderComponent : RComponent<HeaderProps, RState>() {
             }
         }
 
-        // Logout Button
-        styledButton {
-            css {
-                float = kotlinx.css.Float.right
-                fontFamily = "Arial"
-                fontStyle = FontStyle("normal")
-                fontSize = 25.px
-                background = "-webkit-radial-gradient(circle, #1a82f7, #2F2727)"
-                color = Color.white
-                padding = "8px 8px"
-                cursor = Cursor.pointer
-                width = 7.pct
-                height = 9.pct
-                borderRadius = 5.px
-                marginTop = 15.px
-                marginRight = 30.px
-                hover {
-                    backgroundColor = Color("#004d4d")
+        if (props.showSignOutButton) {
+            // Signout Button
+            styledButton {
+                css {
+                    float = kotlinx.css.Float.right
+                    fontFamily = "Arial"
+                    fontStyle = FontStyle("normal")
+                    fontSize = 25.px
+                    background = "-webkit-radial-gradient(circle, #1a82f7, #2F2727)"
+                    color = Color.white
+                    padding = "8px 8px"
+                    cursor = Cursor.pointer
+                    width = 7.pct
+                    height = 9.pct
+                    borderRadius = 5.px
+                    marginTop = 15.px
+                    marginRight = 30.px
+                    hover {
+                        backgroundColor = Color("#004d4d")
+                    }
                 }
-            }
 
-            attrs {
-                text("Logout")
+                attrs {
+                    text("Sign Out")
 
-                onClickFunction = {
-                    props.onLogoutClicked()
+                    onClickFunction = {
+                        props.onSignOutClicked()
+                    }
                 }
             }
         }

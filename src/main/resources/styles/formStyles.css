@@ -1,3 +1,13 @@
+.formCenterLogin {
+  margin-left: 35%;
+  top: 150px;
+  position: absolute;
+  height: 73%;
+  width: 40%;
+  text-align: left;
+  border: 0px solid #ccc;
+}
+
 .formCenter {
   margin-left: 45%;
   top: 200px;
