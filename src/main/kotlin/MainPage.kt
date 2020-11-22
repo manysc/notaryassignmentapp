@@ -33,7 +33,7 @@ class MainPage : RComponent<RProps, MainPageState>() {
                     showEscrowOfficers = false
                     showNotaries = false
                     showNewAssignment = false
-                    showAssignmentDashboard = false
+                    showAssignmentDashboard = true
                     showReports = false
                 }
             }
