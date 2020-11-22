@@ -98,8 +98,9 @@ class SignInForm : RComponent<SignInFormProps, RState>() {
                     fontSize = 30.px
                     background = "-webkit-radial-gradient(circle, #1a82f7, #2F2727)"
                     color = Color.white
-                    padding = "10px 226px"
+                    padding = "10px 336px"
                     cursor = Cursor.pointer
+                    whiteSpace = WhiteSpace.nowrap
                     hover {
                         backgroundColor = Color("#004d4d")
                     }
